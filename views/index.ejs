@@ -1,0 +1,30 @@
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+
+  <body>
+    <div class="blogs content">
+      <h2>Meme Stream</h2>
+
+      <div class="create-blog content">
+        <form action="/" method="POST">
+          <label for="title">Meme Owner:</label>
+          <input type="text" id="name" name="name" required />
+          <label for="snippet">Caption:</label>
+          <input type="text" id="caption" name="caption" required />
+          <label for="body">Meme URL:</label>
+          <input type="text" id="url" name="url" required />
+          <button>Submit</button>
+        </form>
+      </div>
+      <h2>All Memes:</h2>
+      <br />
+      <% if (memes.length > 0) { %> <% memes.forEach(meme => { %>
+      <h3 class="title"><%= meme.name %></h3>
+      <p class="snippet"><%= meme.caption %></p>
+      <img class="image" src="<%= meme.url %> " width="300" height="300" />
+      <% }) %> <% } else { %>
+      <p>There are no memes to display...</p>
+      <% } %>
+    </div>
+  </body>
+</html>
