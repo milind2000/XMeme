@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Meme = require("./models/meme");
-
+var PORT = 3000 || process.env.PORT;
 // express app
 const app = express();
 
@@ -13,7 +13,7 @@ const dbURI =
 
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => app.listen(3000))
+  .then((result) => app.listen(PORT))
   .catch((err) => console.log(err));
 
 // register view engine

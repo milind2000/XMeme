@@ -5,15 +5,15 @@ const memeSchema = new Schema(
   {
     name: {
       type: String,
-      //required: true,
+      required: true,
     },
     url: {
       type: String,
-      //required: true,
+      required: true,
     },
     caption: {
       type: String,
-      //required: true,
+      required: true,
     },
   },
   { timestamps: true }
