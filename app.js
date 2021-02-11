@@ -110,11 +110,7 @@ app.use((req, res) => {
 });
 
 let port = process.env.PORT || 3000 || 8081 || 8080;
-/*
-if (port == null || port == "") {
-  port = 3000;
-}
-*/
+
 app.listen(port, function () {
   console.log("Server started at port.");
 });
