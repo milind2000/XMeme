@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Meme = require("./models/meme");
-var PORT = 3000 || process.env.PORT;
+
 // express app
 const app = express();
 
@@ -11,11 +11,11 @@ const app = express();
 const dbURI =
   "mongodb+srv://milind_30:Milind30@cluster0.04btf.mongodb.net/mern?retryWrites=true&w=majority";
 
-mongoose
-  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+/*
   .then((result) => app.listen(PORT))
   .catch((err) => console.log(err));
-
+*/
 // register view engine
 app.set("view engine", "ejs");
 
@@ -107,4 +107,15 @@ app.get("/memes/:id", (req, res) => {
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
+});
+
+let port = process.env.PORT;
+
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
+
+app.listen(port, function () {
+  console.log("Server started at port.");
 });
