@@ -11,11 +11,12 @@ const app = express();
 const dbURI =
   "mongodb+srv://milind_30:Milind30@cluster0.04btf.mongodb.net/mern?retryWrites=true&w=majority";
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
-/*
-  .then((result) => app.listen(PORT))
-  .catch((err) => console.log(err));
-*/
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
+
 // register view engine
 app.set("view engine", "ejs");
 
@@ -38,7 +39,7 @@ app.get("/", (req, res) => {
       res.render("index", { memes: result, title: "All Memes" });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(404);
     });
 });
 
@@ -47,11 +48,10 @@ app.post("/", (req, res) => {
   meme
     .save()
     .then((result) => {
-      //console.log(result._id);
       res.redirect("/");
     })
     .catch((err) => {
-      console.log(err);
+      res.status(409);
     });
 });
 
@@ -61,10 +61,9 @@ app.get("/memes", (req, res) => {
     .limit(100)
     .then((result) => {
       res.json(result);
-      //console.log(result);
     })
     .catch((err) => {
-      console.log(err);
+      res.status(404);
     });
 });
 
@@ -80,10 +79,9 @@ app.post("/memes", (req, res) => {
       res.json({
         id: result._id,
       });
-      //console.log(result._id);
     })
     .catch((err) => {
-      console.log(err);
+      res.status(409);
     });
 });
 
@@ -97,10 +95,9 @@ app.get("/memes/:id", (req, res) => {
         url: result.url,
         caption: result.caption,
       });
-      //console.log(result);
     })
     .catch((err) => {
-      console.log(err);
+      res.status(404);
     });
 });
 
@@ -112,5 +109,5 @@ app.use((req, res) => {
 let port = process.env.PORT || 3000 || 8081 || 8080;
 
 app.listen(port, function () {
-  console.log("Server started at port.");
+  console.log("Server started.");
 });
