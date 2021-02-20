@@ -1,5 +1,4 @@
 const express = require("express");
-const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Meme = require("./models/meme");
@@ -8,8 +7,7 @@ const Meme = require("./models/meme");
 const app = express();
 
 // connect to mongodb & listen for requests
-const dbURI =
-  "mongodb+srv://milind_30:Milind30@cluster0.04btf.mongodb.net/mern?retryWrites=true&w=majority";
+const dbURI = "mongodb://localhost:27017/memeDB";
 
 mongoose.connect(dbURI, {
   useNewUrlParser: true,
@@ -25,7 +23,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
@@ -39,7 +36,7 @@ app.get("/", (req, res) => {
       res.render("index", { memes: result, title: "All Memes" });
     })
     .catch((err) => {
-      res.status(404);
+      res.status(404).send(err);
     });
 });
 
@@ -51,7 +48,7 @@ app.post("/", (req, res) => {
       res.redirect("/");
     })
     .catch((err) => {
-      res.status(409);
+      res.status(409).send(err);
     });
 });
 
@@ -63,7 +60,7 @@ app.get("/memes", (req, res) => {
       res.json(result);
     })
     .catch((err) => {
-      res.status(404);
+      res.status(404).send(err);
     });
 });
 
@@ -81,7 +78,7 @@ app.post("/memes", (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409);
+      res.status(409).send(err);
     });
 });
 
@@ -97,7 +94,7 @@ app.get("/memes/:id", (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(404);
+      res.status(404).send(err);
     });
 });
 
